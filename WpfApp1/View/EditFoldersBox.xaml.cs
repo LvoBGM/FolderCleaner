@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Controls;
+﻿using System.Windows;
 
 using UserControl = System.Windows.Controls.UserControl;
+using Application = System.Windows.Application;
 
 namespace WpfApp1.View
 {
-    /// <summary>
-    /// Interaction logic for EditFoldersBox.xaml
-    /// </summary>
     public partial class EditFoldersBox : UserControl
     {
         public EditFoldersBox()
         {
             InitializeComponent();
+        }
+
+        private void btnFolders_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            ManageWindow manageWindow = new ManageWindow(Application.Current.MainWindow);
+            manageWindow.Show();
         }
     }
 }

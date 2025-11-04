@@ -19,11 +19,13 @@
                 VerticalAlignment="Center"/>
         </Border>
         <Border Grid.Column="1" Background="DarkGray" BorderThickness="1">
-            <TextBlock Background="Transparent"
-                Text="?"
+            <Button Background="Transparent"
+                Content="?"
+                Width="30"
                 FontSize="19"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"/>
+                VerticalAlignment="Center"
+                BorderThickness="0"/>
         </Border>
     </Grid>
 

@@ -15,7 +15,8 @@
                 Content="Folders"
                 FontSize="30"
                 FontWeight="Bold"
-                BorderThickness="0,0,0,0"/>
+                BorderThickness="0,0,0,0"
+                Click="btnFolders_Click"/>
         <Button Grid.Column="1"
                 Background="LightGray"
                 Content="New Folder"
