@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using WpfApp1.ViewModel;
 
 namespace WpfApp1
 {
@@ -8,6 +9,8 @@ namespace WpfApp1
         {
             Owner = parentWindow;
             InitializeComponent();
+            ManageWindowViewModel vm = new ManageWindowViewModel();
+            DataContext = vm;
         }
     }
 }

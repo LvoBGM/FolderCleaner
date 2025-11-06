@@ -4,9 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:View="clr-namespace:WpfApp1.View"
+
+        
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d" WindowStartupLocation="CenterOwner"
         Title="Manage" Height="450" Width="800">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -18,36 +21,20 @@
         <Grid Grid.Row="1" Background="LightGray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="15*"/>
-                <ColumnDefinition Width="60*"/>
-                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="150"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Border Background="DarkGray" BorderThickness="1">
-                <TextBlock Background="Transparent"
-                    Text="№"
-                    FontSize="19"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"/>
-            </Border>
-            <Border Grid.Column="1" Background="DarkGray" BorderThickness="1">
-                <TextBlock Background="Transparent"
-                    Text="Name"
-                    FontSize="19"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"/>
-            </Border>
-            <Border Grid.Column="2" Background="DarkGray" BorderThickness="1">
-                <TextBlock Background="Transparent"
-                    Text="Extentions"
-                    FontSize="19"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"/>
-            </Border>
+
             <View:FilesSearch Grid.Column="3"/>
+
+            <View:FoldersDataGrid Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
+
+
         </Grid>
     </Grid>
 </Window>
