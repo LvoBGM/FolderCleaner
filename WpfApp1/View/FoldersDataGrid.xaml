@@ -14,6 +14,7 @@
         <DataGrid 
           ItemsSource="{Binding Folders}"
           SelectedItem="{Binding SelectedFolder}"
+          IsReadOnly="True"
           HeadersVisibility="Column"
           AutoGenerateColumns="False"
           CanUserAddRows="False"
@@ -60,7 +61,7 @@
                     
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="150"/>
-                <DataGridTextColumn Header="Extentions" Binding="{Binding Types, Converter={StaticResource Converter}}" Width="*"/>
+                <DataGridTextColumn Header="Types" Binding="{Binding Types, Converter={StaticResource Converter}}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

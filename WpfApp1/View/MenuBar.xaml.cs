@@ -4,6 +4,7 @@ using WinForms = System.Windows.Forms;
 
 using UserControl = System.Windows.Controls.UserControl;
 using System.Diagnostics;
+using WpfApp1.Model;
 
 namespace WpfApp1.View
 {
@@ -24,6 +25,8 @@ namespace WpfApp1.View
             FindFolder();
         }
 
+        public string MainFolderPath;
+
         private void FindFolder()
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
@@ -33,9 +36,10 @@ namespace WpfApp1.View
 
             if (result == DialogResult.OK)
             {
-                string folder = dialog.SelectedPath;
+                MainFolderPath = dialog.SelectedPath;
+                Folder.MainFolderPath = MainFolderPath;
 
-                Debug.WriteLine(folder);
+                Debug.WriteLine(MainFolderPath);
             }
         }
     }
