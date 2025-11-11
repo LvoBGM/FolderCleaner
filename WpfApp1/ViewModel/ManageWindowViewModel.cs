@@ -4,14 +4,13 @@ using System.IO;
 using System.Text.Json;
 using WpfApp1.Model;
 using WpfApp1.MVVM;
-using static System.Net.WebRequestMethods;
 
 namespace WpfApp1.ViewModel
 {
     internal class ManageWindowViewModel : ViewModelBase
     {
-        public ObservableCollection<Folder> Folders { get; init; } = new ObservableCollection<Folder>();
-        public ObservableCollection<FileClass> Files { get; init; } = new ObservableCollection<FileClass>();
+        public ObservableCollection<Folder> Folders { get; init; } = [];
+        public ObservableCollection<FileClass> Files { get; init; } = [];
 
         public RelayCommand DoubleClickFileClass => new RelayCommand(execute => OpenFile(execute), canExecute => { return true; });
 
@@ -29,6 +28,12 @@ namespace WpfApp1.ViewModel
 
         public ManageWindowViewModel()
         {
+            LoadFolders();
+        }
+
+        public void LoadFolders()
+        {
+
             string jsonPath = "folders.json";
 
             if (System.IO.File.Exists(jsonPath))
@@ -37,7 +42,11 @@ namespace WpfApp1.ViewModel
 
                 Debug.WriteLine(json);
 
-                Folders = JsonSerializer.Deserialize<ObservableCollection<Folder>>(json)!;
+                Folders.Clear();
+                foreach (var folder in JsonSerializer.Deserialize<ObservableCollection<Folder>>(json)!)
+                {
+                    Folders.Add(folder);
+                }
 
                 Debug.WriteLine(Folders[0].Id);
             }

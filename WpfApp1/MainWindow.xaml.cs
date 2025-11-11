@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Shapes;
+using WpfApp1.Model;
 
 namespace WpfApp1
 {
@@ -14,8 +15,7 @@ namespace WpfApp1
 
         private void btnOrganizeFiles(object sender, RoutedEventArgs e)
         {
-            string folderPath = @"C:\Users\Dell\Downloads";
-
+            string folderPath = SourceDestinationFoldersClass.SourceFolderPath;
             try
             {
                 string[] files = Directory.GetFiles(folderPath);
@@ -28,11 +28,6 @@ namespace WpfApp1
             {
                 Debug.WriteLine($"Error: The directory '{folderPath}' was not found.");
             }
-        }
-
-        private void EditFoldersBox_Loaded(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

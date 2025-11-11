@@ -22,7 +22,8 @@
                 Content="New Folder"
                 FontSize="30"
                 FontWeight="Bold"
-                BorderThickness="0,0,0,0"/>
+                BorderThickness="0,0,0,0"
+                Click="btnNewFolder_Click"/>
     </Grid>
     
 </UserControl>

@@ -1,10 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using WinForms = System.Windows.Forms;
-
-using UserControl = System.Windows.Controls.UserControl;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using System.Windows;
 using WpfApp1.Model;
+using UserControl = System.Windows.Controls.UserControl;
+using WinForms = System.Windows.Forms;
 
 namespace WpfApp1.View
 {
@@ -17,17 +15,15 @@ namespace WpfApp1.View
 
         private void SourceFolderClick(object sender, RoutedEventArgs e)
         {
-            FindFolder();
+            FindFolder(false);
         }
 
         private void DestinationFolderClick(object sender, RoutedEventArgs e)
         {
-            FindFolder();
+            FindFolder(true);      
         }
 
-        public string MainFolderPath;
-
-        private void FindFolder()
+        private void FindFolder(bool searchForDestinationFolder)
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.InitialDirectory = WinForms.Application.StartupPath;
@@ -36,10 +32,17 @@ namespace WpfApp1.View
 
             if (result == DialogResult.OK)
             {
-                MainFolderPath = dialog.SelectedPath;
-                Folder.MainFolderPath = MainFolderPath;
+                string path = dialog.SelectedPath;
+                if(searchForDestinationFolder)
+                {
+                    SourceDestinationFoldersClass.DestinationFolderPath = path;
+                }
+                else
+                {
+                    SourceDestinationFoldersClass.SourceFolderPath = path;
+                }
 
-                Debug.WriteLine(MainFolderPath);
+                Debug.WriteLine(path);
             }
         }
     }

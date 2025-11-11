@@ -12,16 +12,26 @@ namespace WpfApp1.View
         {
             InitializeComponent();
         }
-
         private void btnFolders_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (Folder.MainFolderPath == String.Empty)
+            if (SourceDestinationFoldersClass.DestinationFolderPath == String.Empty && !SourceDestinationFoldersClass.LoadFromJson())
             {
                 System.Windows.MessageBox.Show("Set Main Folder Path!");
                 return;
             }
             ManageWindow manageWindow = new ManageWindow(Application.Current.MainWindow);
             manageWindow.Show();
+        }
+
+        private void btnNewFolder_Click(object sender, RoutedEventArgs e)
+        {
+            if (SourceDestinationFoldersClass.DestinationFolderPath == String.Empty && !SourceDestinationFoldersClass.LoadFromJson())
+            {
+                System.Windows.MessageBox.Show("Set Main Folder Path!");
+                return;
+            }
+            AddFolderWindow addFolderWindow = new AddFolderWindow(Application.Current.MainWindow);
+            addFolderWindow.Show();
         }
     }
 }
