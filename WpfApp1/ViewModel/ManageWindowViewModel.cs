@@ -9,7 +9,7 @@ namespace WpfApp1.ViewModel
 {
     internal class ManageWindowViewModel : ViewModelBase
     {
-        public ObservableCollection<Folder> Folders { get; init; } = [];
+        public ObservableCollection<Folder> Folders { get; set; }
         public ObservableCollection<FileClass> Files { get; init; } = [];
 
         public RelayCommand DoubleClickFileClass => new RelayCommand(execute => OpenFile(execute), canExecute => { return true; });
@@ -22,37 +22,6 @@ namespace WpfApp1.ViewModel
                 {
                     UseShellExecute = true
                 });
-            }
-        }
-
-
-        public ManageWindowViewModel()
-        {
-            LoadFolders();
-        }
-
-        public void LoadFolders()
-        {
-
-            string jsonPath = "folders.json";
-
-            if (System.IO.File.Exists(jsonPath))
-            {
-                string json = System.IO.File.ReadAllText(jsonPath);
-
-                Debug.WriteLine(json);
-
-                Folders.Clear();
-                foreach (var folder in JsonSerializer.Deserialize<ObservableCollection<Folder>>(json)!)
-                {
-                    Folders.Add(folder);
-                }
-
-                Debug.WriteLine(Folders[0].Id);
-            }
-            else
-            {
-                Debug.WriteLine("JSON file not found.");
             }
         }
 
@@ -85,6 +54,11 @@ namespace WpfApp1.ViewModel
         {
             get { return selectedFile; }
             set { selectedFile = value; }
+        }
+
+        public ManageWindowViewModel()
+        {
+            Folders = FolderStore.Folders;
         }
 
     }

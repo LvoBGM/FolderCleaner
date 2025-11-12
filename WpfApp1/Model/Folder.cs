@@ -1,25 +1,53 @@
-﻿namespace WpfApp1.Model
+﻿using System.IO;
+using System.Text.Json;
+
+namespace WpfApp1.Model
 {
-    internal class Folder
+    public class Folder
     {
+        //public int Id { get; set; }
+        //public string Name { get; set; } = string.Empty;
+
+        //private string path;
+
+        //public string Path
+        //{
+        //    get { return path; }
+        //    set 
+        //    { 
+        //        if(SourceDestinationFoldersClass.DestinationFolderPath != string.Empty)
+        //        {
+        //            path = $"{SourceDestinationFoldersClass.DestinationFolderPath}\\{value}";
+        //        }
+        //    }
+        //}
+
+        //public List<string> Types { get; set; } = [];
         public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; }
+        public string Path { get; private set; } = "";
+        public List<string> Types { get; set; }
 
-        private string path;
+        private static string JsonPath { get; set; } = "folders.json";
 
-        public string Path
+        public Folder(int id, string name, List<string>? types = null)
         {
-            get { return path; }
-            set 
-            { 
-                if(SourceDestinationFoldersClass.DestinationFolderPath != string.Empty)
-                {
-                    path = $"{SourceDestinationFoldersClass.DestinationFolderPath}\\{value}";
-                }
+            Id = id;
+            Name = name ?? string.Empty;
+
+            if (SourceDestinationFoldersClass.DestinationFolderPath != string.Empty)
+            {
+                Path = $"{SourceDestinationFoldersClass.DestinationFolderPath}\\{name}";
             }
+
+            Types = types ?? new List<string>();
         }
 
-        public string[] Types { get; set; } = Array.Empty<string>(); // Change to list
+        public void LoadToJson()
+        {
+            string json = JsonSerializer.Serialize(this);
 
+            File.WriteAllTextAsync(JsonPath, json);
+        }
     }
 }

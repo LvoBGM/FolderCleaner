@@ -19,6 +19,6 @@
         <EditFolders:EditFoldersBox Grid.Row="1"/>
 
         <Button Grid.Row="2" Name="btnOrganize" Width="150" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center"
-                Content="Organize!" FontSize="24" Click="btnOrganizeFiles"/>
+                Content="Organize!" FontSize="24"/>
     </Grid>
 </Window>

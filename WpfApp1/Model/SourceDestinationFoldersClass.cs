@@ -5,7 +5,7 @@ namespace WpfApp1.Model
 {
     public static class SourceDestinationFoldersClass
     {
-        public static string JsonPath { get; set; } = "sourceAndDestinationFolder.json";
+        private static string JsonPath { get; set; } = "sourceAndDestinationFolder.json";
 
         private static string destinationFolderPath = string.Empty;
         public static string DestinationFolderPath

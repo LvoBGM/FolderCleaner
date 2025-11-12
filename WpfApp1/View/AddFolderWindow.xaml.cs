@@ -9,7 +9,7 @@ namespace WpfApp1.View
         {
             Owner = parentWindow;
             InitializeComponent();
-            ManageWindowViewModel vm = new ManageWindowViewModel();
+            AddWindowViewModel vm = new AddWindowViewModel();
             DataContext = vm;
         }
     }
