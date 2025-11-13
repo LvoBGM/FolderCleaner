@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 namespace WpfApp1.Model
@@ -52,13 +54,34 @@ namespace WpfApp1.Model
             string json = File.ReadAllText(JsonPath);
 
             var obj = JsonSerializer.Deserialize<FolderPaths>(json);
-            if (obj != null && !string.IsNullOrEmpty(obj.SourceFolderPath) && !string.IsNullOrEmpty(obj.DestinationFolderPath)) // Ensure JSON is fomrated correctly
+            if (obj == null)
+            {
+                return false;
+            }
+            else if (string.IsNullOrEmpty(obj.DestinationFolderPath) && !string.IsNullOrEmpty(obj.SourceFolderPath))
+            {
+                SourceFolderPath = obj.SourceFolderPath;
+                DestinationFolderPath = string.Empty;
+                return false;
+            }
+            else if (string.IsNullOrEmpty(obj.SourceFolderPath) && !string.IsNullOrEmpty(obj.DestinationFolderPath))
+            {
+                DestinationFolderPath = obj.DestinationFolderPath;
+                SourceFolderPath = string.Empty;
+                return false;
+            }
+            else if (string.IsNullOrEmpty(obj.SourceFolderPath) && string.IsNullOrEmpty(obj.DestinationFolderPath))
+            {
+                DestinationFolderPath = string.Empty;
+                SourceFolderPath = string.Empty;
+                return false;
+            }
+            else
             {
                 SourceFolderPath = obj.SourceFolderPath;
                 DestinationFolderPath = obj.DestinationFolderPath;
                 return true;
             }
-            return false;
         }
     }
 

@@ -25,9 +25,10 @@ namespace WpfApp1.View
 
         private void btnNewFolder_Click(object sender, RoutedEventArgs e)
         {
-            if (SourceDestinationFoldersClass.DestinationFolderPath == String.Empty && !SourceDestinationFoldersClass.LoadFromJson())
+            if ((SourceDestinationFoldersClass.DestinationFolderPath == String.Empty || SourceDestinationFoldersClass.SourceFolderPath == String.Empty) && !SourceDestinationFoldersClass.LoadFromJson())
             {
-                System.Windows.MessageBox.Show("Set Main Folder Path!");
+                
+                System.Windows.MessageBox.Show("Set Destination/Source Folder Path!");
                 return;
             }
             AddFolderWindow addFolderWindow = new AddFolderWindow(Application.Current.MainWindow);

@@ -7,7 +7,7 @@ public class EnumerableJoinConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is string[] items)
+        if (value is List<string> items)
         {
             return string.Join(", ", items);
         }
@@ -16,10 +16,6 @@ public class EnumerableJoinConverter : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is string items)
-        {
-            return items.Split(", ");
-        }
         return null;
     }
 }

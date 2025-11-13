@@ -10,9 +10,11 @@
     <UserControl.Resources>
         <Model:EnumerableJoinConverter x:Key="Converter"/>
     </UserControl.Resources>
+    
+    
     <Grid>
         <DataGrid 
-          ItemsSource="{Binding Folders}"
+          ItemsSource="{Binding FoldersList}"
           SelectedItem="{Binding SelectedFolder}"
           IsReadOnly="True"
           HeadersVisibility="Column"

@@ -18,7 +18,7 @@ namespace WpfApp1.ViewModel
     }
     internal class MainWindowViewModel
     {
-        public void LoadFolders()
+        static public void LoadFolders()
         {
 
             string jsonPath = "folders.json";
@@ -47,16 +47,13 @@ namespace WpfApp1.ViewModel
             {
                 Debug.WriteLine("JSON file not found.");
 
-                ObservableCollection<Folder> folders = new ObservableCollection<Folder> { new Folder(1,"MyFirstFolder") };
-
-                string json = JsonSerializer.Serialize(folders);
-
-                File.WriteAllText(jsonPath, json);
+                File.WriteAllText(jsonPath, "[]");
             }
         }
         public MainWindowViewModel()
         {
             LoadFolders();
+            SourceDestinationFoldersClass.LoadFromJson();
         }
             
         private void btnOrganizeFiles(object sender, RoutedEventArgs e)

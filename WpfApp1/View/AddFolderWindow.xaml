@@ -17,11 +17,11 @@
         <View:MenuBar/>
         <StackPanel Grid.Row="1">
             <Label Content="Id"/>
-            <TextBox Text="{Binding Id}" FontSize="19" Margin="5,0,5,15"/>
+            <TextBox Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}" FontSize="19" Margin="5,0,5,15"/>
             <Label Content="Name"/>
-            <TextBox Text="{Binding Name}" FontSize="19" Margin="5,0,5,15"/>
+            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" FontSize="19" Margin="5,0,5,15" />
             <Label Content="Extentions"/>
-            <TextBox Text="{Binding Extentions}" FontSize="19" Margin="5,0,5,15"/>
+            <TextBox Text="{Binding Extentions, UpdateSourceTrigger=PropertyChanged}" FontSize="19" Margin="5,0,5,15"/>
         </StackPanel>
 
         <Button Grid.Row="3" Content="Add Folder!" Command="{Binding AddFolder}"/>

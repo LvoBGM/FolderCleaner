@@ -9,7 +9,7 @@ namespace WpfApp1.ViewModel
 {
     internal class ManageWindowViewModel : ViewModelBase
     {
-        public ObservableCollection<Folder> Folders { get; set; }
+        public ObservableCollection<Folder> FoldersList { get; set; }
         public ObservableCollection<FileClass> Files { get; init; } = [];
 
         public RelayCommand DoubleClickFileClass => new RelayCommand(execute => OpenFile(execute), canExecute => { return true; });
@@ -33,6 +33,10 @@ namespace WpfApp1.ViewModel
             {
                 selectedFolder = value;
 
+                if (selectedFolder == null)
+                {
+                    return;
+                }
                 string[] filePaths = Directory.GetFiles(selectedFolder.Path, "*");
 
                 Files.Clear();
@@ -58,7 +62,12 @@ namespace WpfApp1.ViewModel
 
         public ManageWindowViewModel()
         {
-            Folders = FolderStore.Folders;
+            UpdateFoldersList();
+        }
+
+        public void UpdateFoldersList()
+        {
+            FoldersList = FolderStore.Folders;
         }
 
     }
