@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace WpfApp1.ViewModel
     }
     internal class MainWindowViewModel
     {
+        public RelayCommand OrganizeFiles => new RelayCommand(execute => btnOrganizeFiles());
         static public void LoadFolders()
         {
 
@@ -55,11 +57,22 @@ namespace WpfApp1.ViewModel
             LoadFolders();
             SourceDestinationFoldersClass.LoadFromJson();
         }
-            
-        private void btnOrganizeFiles(object sender, RoutedEventArgs e)
-        { 
-        
-        // TODO
+
+        private void btnOrganizeFiles()
+        {
+            string[] files = Directory.GetFiles(SourceDestinationFoldersClass.SourceFolderPath);
+
+            foreach (string file in files)
+            {
+                foreach(Folder folder in FolderStore.Folders)
+                {
+                    if (folder.Types.Contains(Path.GetExtension(file)))
+                    {
+                        File.Move(file, $"{folder.Path}\\{Path.GetFileName(file)}");
+                        Debug.Print($"Moved {file} to {folder.Path}");
+                    }
+                }
+            }
         }
     }
 }
