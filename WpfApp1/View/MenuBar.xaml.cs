@@ -13,21 +13,22 @@ namespace WpfApp1.View
             InitializeComponent();
         }
 
-        private void SourceFolderClick(object sender, RoutedEventArgs e)
+        public void SourceFolderClick(object sender, RoutedEventArgs e)
         {
             FindFolder(false);
         }
 
-        private void DestinationFolderClick(object sender, RoutedEventArgs e)
+        public void DestinationFolderClick(object sender, RoutedEventArgs e)
         {
             FindFolder(true);      
         }
 
-        private void FindFolder(bool searchForDestinationFolder)
+        public static void FindFolder(bool searchForDestinationFolder)
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.InitialDirectory = WinForms.Application.StartupPath;
 
+            dialog.Description = searchForDestinationFolder ? "Set Destination Folder" : "Set Source Folder";
             DialogResult result = dialog.ShowDialog();
 
             if (result == DialogResult.OK)

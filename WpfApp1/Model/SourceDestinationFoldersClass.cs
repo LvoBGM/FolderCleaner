@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using WpfApp1.View;
 
 namespace WpfApp1.Model
 {
@@ -81,6 +82,18 @@ namespace WpfApp1.Model
                 SourceFolderPath = obj.SourceFolderPath;
                 DestinationFolderPath = obj.DestinationFolderPath;
                 return true;
+            }
+        }
+
+        public static void CheckIfPathLoaded()
+        {
+            if (SourceFolderPath == string.Empty)
+            {
+                MenuBar.FindFolder(false);
+            }
+            if (DestinationFolderPath == string.Empty)
+            {
+                MenuBar.FindFolder(true);
             }
         }
     }

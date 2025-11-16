@@ -16,7 +16,7 @@ namespace WpfApp1.View
         {
             if (SourceDestinationFoldersClass.DestinationFolderPath == String.Empty && !SourceDestinationFoldersClass.LoadFromJson())
             {
-                System.Windows.MessageBox.Show("Set Main Folder Path!");
+                SourceDestinationFoldersClass.CheckIfPathLoaded();
                 return;
             }
             ManageWindow manageWindow = new ManageWindow(Application.Current.MainWindow);
@@ -27,8 +27,8 @@ namespace WpfApp1.View
         {
             if ((SourceDestinationFoldersClass.DestinationFolderPath == String.Empty || SourceDestinationFoldersClass.SourceFolderPath == String.Empty) && !SourceDestinationFoldersClass.LoadFromJson())
             {
-                
-                System.Windows.MessageBox.Show("Set Destination/Source Folder Path!");
+
+                SourceDestinationFoldersClass.CheckIfPathLoaded();
                 return;
             }
             AddFolderWindow addFolderWindow = new AddFolderWindow(Application.Current.MainWindow);
