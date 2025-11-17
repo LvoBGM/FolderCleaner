@@ -14,7 +14,7 @@
     
     <Grid>
         <DataGrid 
-          ItemsSource="{Binding FoldersList}"
+          ItemsSource="{Binding Folders}"
           SelectedItem="{Binding SelectedFolder}"
           IsReadOnly="True"
           HeadersVisibility="Column"
@@ -26,6 +26,20 @@
           HorizontalGridLinesBrush="DarkGray"
           VerticalGridLinesBrush="DarkGray"
           BorderThickness="0">
+            <DataGrid.Resources>
+                <ContextMenu x:Key="RowMenu">
+                    <MenuItem Header="Edit"/>
+                    <MenuItem Header="Delete" Command="{Binding ManageWindowViewModel.DeleteSelectedFolder,RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                              CommandParameter="{Binding}"/>
+                </ContextMenu>
+            </DataGrid.Resources>
+
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="ContextMenu" Value="{StaticResource RowMenu}"/>
+                </Style>
+            </DataGrid.RowStyle>
+            
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
                     <Setter Property="Height" Value="30"/>

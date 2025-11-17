@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows;
 using WpfApp1.Model;
 
 namespace WpfApp1.ViewModel
@@ -16,15 +9,10 @@ namespace WpfApp1.ViewModel
     public static class FolderStore
     {
         static public ObservableCollection<Folder> Folders { get; set; } = [];
-    }
-    internal class MainWindowViewModel
-    {
-        public RelayCommand OrganizeFiles => new RelayCommand(execute => btnOrganizeFiles());
+
+        static private string jsonPath = "folders.json";
         static public void LoadFolders()
         {
-
-            string jsonPath = "folders.json";
-
             if (System.IO.File.Exists(jsonPath))
             {
                 string json = System.IO.File.ReadAllText(jsonPath);
@@ -52,10 +40,34 @@ namespace WpfApp1.ViewModel
                 File.WriteAllText(jsonPath, "[]");
             }
         }
+        static public void WriteFolders()
+        {
+            if (System.IO.File.Exists(jsonPath))
+            {
+                string json = JsonSerializer.Serialize(FolderStore.Folders);
+
+                File.WriteAllText(jsonPath, json);
+            }
+            else
+            {
+                Debug.WriteLine("JSON file not found.");
+
+                File.WriteAllText(jsonPath, "[]");
+            }
+        }
+    }
+    internal class MainWindowViewModel
+    {
+        public RelayCommand OrganizeFiles => new RelayCommand(execute => btnOrganizeFiles());
+
+        
+
+        
         public MainWindowViewModel()
         {
-            LoadFolders();
+            FolderStore.LoadFolders();
             SourceDestinationFoldersClass.LoadFromJson();
+            ManageWindowViewModel.SyncFoldersCollection();
         }
 
         private void btnOrganizeFiles()

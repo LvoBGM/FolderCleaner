@@ -9,42 +9,33 @@ namespace WpfApp1.Model
     public static class SourceDestinationFoldersClass
     {
         private static string JsonPath { get; set; } = "sourceAndDestinationFolder.json";
-
-        private static string destinationFolderPath = string.Empty;
-        public static string DestinationFolderPath
+        public static string DestinationFolderPath { get; private set; } = string.Empty;
+        public static void SetDestinationFolderPath(string value)
         {
-            get { return destinationFolderPath; }
-            set
+            DestinationFolderPath = value;
+
+            var json = JsonSerializer.Serialize(new
             {
-                destinationFolderPath = value;
-                
-                var json = JsonSerializer.Serialize(new
-                {
-                    SourceFolderPath,
-                    DestinationFolderPath
-                });
+                SourceFolderPath,
+                DestinationFolderPath
+            });
 
-                File.WriteAllTextAsync(JsonPath, json);
-            }
+            File.WriteAllText(JsonPath, json);
         }
+        public static string SourceFolderPath { get; private set; } = string.Empty;
+        public static void SetSourceFolderPath(string value)
+        {
+            SourceFolderPath = value;
 
-        private static string sourceFolderPath = string.Empty;
-        public static string SourceFolderPath
-    {
-            get { return sourceFolderPath; }
-            set
+            var json = JsonSerializer.Serialize(new
             {
-            sourceFolderPath = value;
+                SourceFolderPath,
+                DestinationFolderPath
+            });
 
-                var json = JsonSerializer.Serialize(new
-                {
-                    SourceFolderPath,
-                    DestinationFolderPath
-                });
-
-                File.WriteAllTextAsync(JsonPath, json);
-            }
+            File.WriteAllText(JsonPath, json);
         }
+        
 
         public static bool LoadFromJson()
         {

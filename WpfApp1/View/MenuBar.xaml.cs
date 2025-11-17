@@ -36,11 +36,11 @@ namespace WpfApp1.View
                 string path = dialog.SelectedPath;
                 if(searchForDestinationFolder)
                 {
-                    SourceDestinationFoldersClass.DestinationFolderPath = path;
+                    SourceDestinationFoldersClass.SetDestinationFolderPath(path);
                 }
                 else
                 {
-                    SourceDestinationFoldersClass.SourceFolderPath = path;
+                    SourceDestinationFoldersClass.SetSourceFolderPath(path);
                 }
 
                 Debug.WriteLine(path);

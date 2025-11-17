@@ -9,10 +9,11 @@ namespace WpfApp1.ViewModel
 {
     internal class ManageWindowViewModel : ViewModelBase
     {
-        public ObservableCollection<Folder> FoldersList { get; set; }
+        public static ObservableCollection<Folder> Folders { get; set; } = [];
         public ObservableCollection<FileClass> Files { get; init; } = [];
 
         public RelayCommand DoubleClickFileClass => new RelayCommand(execute => OpenFile(execute), canExecute => { return true; });
+        public RelayCommand DeleteSelectedFolder => new RelayCommand(execute => DeleteFolder(), canExecute => { return true; });
 
         private void OpenFile(object parameter)
         {
@@ -23,6 +24,13 @@ namespace WpfApp1.ViewModel
                     UseShellExecute = true
                 });
             }
+        }
+        private void DeleteFolder()
+        {
+            Folders.Remove(SelectedFolder);
+            FolderStore.Folders = Folders;
+
+            FolderStore.WriteFolders();
         }
 
         private Folder selectedFolder;
@@ -60,14 +68,9 @@ namespace WpfApp1.ViewModel
             set { selectedFile = value; }
         }
 
-        public ManageWindowViewModel()
+        public static void SyncFoldersCollection()
         {
-            UpdateFoldersList();
-        }
-
-        public void UpdateFoldersList()
-        {
-            FoldersList = FolderStore.Folders;
+            Folders = FolderStore.Folders;
         }
 
     }

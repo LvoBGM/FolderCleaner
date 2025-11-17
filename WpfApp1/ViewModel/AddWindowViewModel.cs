@@ -41,7 +41,7 @@ namespace WpfApp1.ViewModel
                 }
                 Folder folder = new Folder(Id, Name, ConvertToExtentionsList(Extentions));
                 folder.LoadToJson();
-                MainWindowViewModel.LoadFolders();
+                FolderStore.LoadFolders();
                 Id = "0";
                 Name = " ";
                 Extentions = " ";
