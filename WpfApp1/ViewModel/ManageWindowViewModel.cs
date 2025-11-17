@@ -28,7 +28,6 @@ namespace WpfApp1.ViewModel
         private void DeleteFolder()
         {
             Folders.Remove(SelectedFolder);
-            FolderStore.Folders = Folders;
 
             FolderStore.WriteFolders();
         }
