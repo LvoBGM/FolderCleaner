@@ -6,7 +6,7 @@ namespace WpfApp1.Model
 {
     public class Folder
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
 
         private string path;
@@ -30,7 +30,7 @@ namespace WpfApp1.Model
 
         private static string JsonPath { get; set; } = "folders.json";
 
-        public Folder(string id, string name, List<string>? types = null)
+        public Folder(int id, string name, List<string>? types = null)
         {
             Id = id;
             Name = name ?? string.Empty;

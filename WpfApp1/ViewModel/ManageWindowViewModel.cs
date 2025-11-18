@@ -25,7 +25,7 @@ namespace WpfApp1.ViewModel
                 });
             }
         }
-        public void DeleteFolder()
+        public void DeleteFolder() // TODO: Doesn't work if user has selected multible folder AND ask if user wants to delete the actual directory as will
         {
             Folders.Remove(SelectedFolder);
 

@@ -12,13 +12,24 @@ namespace WpfApp1.ViewModel
         static public ObservableCollection<Folder> Folders { get; set; } = [];
 
         static private string jsonPath = "folders.json";
+
+        static public void SortFolders()
+        {
+            var sorted = Folders.OrderBy(x => x.Id).ToList();
+
+            Folders.Clear();
+            foreach (var item in sorted)
+            {
+                Folders.Add(item);
+            }
+        }
         static public void LoadFolders()
         {
             if (System.IO.File.Exists(jsonPath))
             {
                 string json = System.IO.File.ReadAllText(jsonPath);
 
-                FolderStore.Folders.Clear();
+                Folders.Clear();
                 ObservableCollection<Folder> folders = new ObservableCollection<Folder>();
                 try
                 {
@@ -31,8 +42,10 @@ namespace WpfApp1.ViewModel
 
                 foreach (var folder in folders)
                 {
-                    FolderStore.Folders.Add(folder);
+                    Folders.Add(folder);
                 }
+
+                SortFolders();
             }
             else
             {

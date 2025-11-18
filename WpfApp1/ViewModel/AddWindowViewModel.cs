@@ -8,10 +8,8 @@ namespace WpfApp1.ViewModel
     internal class AddWindowViewModel : ViewModelBase
     {
         public RelayCommand AddFolder => new RelayCommand(execute => CreateFolder());
-
-        private string id = "";
-
-        public string Id
+        private int id = 0;
+        public int Id
         {
             get { return id; }
             set { id = value; OnPropertyChanged(); }
@@ -42,9 +40,9 @@ namespace WpfApp1.ViewModel
                 Folder folder = new Folder(Id, Name, ConvertToExtentionsList(Extentions));
                 folder.LoadToJson();
                 FolderStore.LoadFolders();
-                Id = "0";
-                Name = " ";
-                Extentions = " ";
+                Id = NextId();
+                Name = "";
+                Extentions = "";
                 OnPropertyChanged();
                 return;
             }
@@ -58,15 +56,9 @@ namespace WpfApp1.ViewModel
         private bool CheckInput()
         {
             Debug.WriteLine(Extentions);
-            if (string.IsNullOrEmpty(Id) || string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Name))
+            if (Id < 1 || string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Name))
             {
                 Debug.WriteLine("Something is null or empty");
-                return false;
-            }
-
-            // Check Id
-            if (!int.TryParse(Id, out int number))
-            {
                 return false;
             }
 
@@ -94,7 +86,17 @@ namespace WpfApp1.ViewModel
         }
         private int NextId()
         {
-            return 0;
+            if(FolderStore.Folders.Count() == 0)
+            {
+                return 1;
+            }
+            int lastId = FolderStore.Folders.Last().Id;
+            return lastId + 1;
+        }
+
+        public AddWindowViewModel()
+        {
+            Id = NextId();
         }
 
     }
