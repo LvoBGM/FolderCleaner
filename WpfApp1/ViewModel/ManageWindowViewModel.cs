@@ -25,7 +25,7 @@ namespace WpfApp1.ViewModel
                 });
             }
         }
-        private void DeleteFolder()
+        public void DeleteFolder()
         {
             Folders.Remove(SelectedFolder);
 
