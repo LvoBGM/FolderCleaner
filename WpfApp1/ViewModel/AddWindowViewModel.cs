@@ -8,6 +8,12 @@ namespace WpfApp1.ViewModel
     internal class AddWindowViewModel : ViewModelBase
     {
         public RelayCommand AddFolder => new RelayCommand(execute => CreateFolder());
+        private string errorText = string.Empty;
+        public string ErrorText
+        {
+            get { return errorText; }
+            set { errorText = value; OnPropertyChanged(); }
+        }
         private int id = 0;
         public int Id
         {
@@ -43,6 +49,7 @@ namespace WpfApp1.ViewModel
                 Id = NextId();
                 Name = "";
                 Extentions = "";
+                ErrorText = "";
                 OnPropertyChanged();
                 return;
             }
@@ -55,10 +62,9 @@ namespace WpfApp1.ViewModel
 
         private bool CheckInput()
         {
-            Debug.WriteLine(Extentions);
             if (Id < 1 || string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Name))
             {
-                Debug.WriteLine("Something is null or empty");
+                ErrorText = "A field is empty";
                 return false;
             }
 
@@ -69,18 +75,34 @@ namespace WpfApp1.ViewModel
             {
                 if (!extention.StartsWith('.'))
                 {
-                    Debug.WriteLine("Not all extentions start with a .");
+                    ErrorText = "Extentions have to start with a dot!";
                     return false;
                 }
                 if (extention.Length < 2)
                 {
-                    Debug.WriteLine("Extentions has to have letters after the dot");
+                    ErrorText = "Extentions have to have letters after the dot!";
                     return false;
                 }
 
                 string extensionBody = extention.Substring(1);
                 if (!extensionBody.All(char.IsLetterOrDigit))
+                    ErrorText = "Input needs to be only letters and digits!";
                     return false;
+            }
+
+            // Check for duplicate name/Id
+            foreach (var folder in FolderStore.Folders)
+            {
+                if (folder.Id == Id)
+                {
+                    ErrorText = "A folder with that id already exists!";
+                    return false;
+                }
+                if (folder.Name == Name)
+                {
+                    ErrorText = "A folder with that name already exists!";
+                    return false;
+                }
             }
             return true;
         }

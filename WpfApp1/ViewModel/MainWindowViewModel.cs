@@ -58,7 +58,7 @@ namespace WpfApp1.ViewModel
         {
             if (System.IO.File.Exists(jsonPath))
             {
-                string json = JsonSerializer.Serialize(FolderStore.Folders);
+                string json = JsonSerializer.Serialize(Folders);
 
                 File.WriteAllText(jsonPath, json);
             }
@@ -73,10 +73,6 @@ namespace WpfApp1.ViewModel
     internal class MainWindowViewModel
     {
         public RelayCommand OrganizeFiles => new RelayCommand(execute => btnOrganizeFiles());
-
-        
-
-        
         public MainWindowViewModel()
         {
             SourceDestinationFoldersClass.LoadFromJson();

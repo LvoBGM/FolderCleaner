@@ -6,10 +6,11 @@
         xmlns:View="clr-namespace:WpfApp1.View"
         xmlns:local="clr-namespace:WpfApp1.View"
         mc:Ignorable="d"
-        Title="AddFolderWindow" Height="300" Width="250">
+        Title="AddFolderWindow" Height="350" Width="250">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="200"/>
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
@@ -23,6 +24,8 @@
             <Label Content="Extentions"/>
             <TextBox Text="{Binding Extentions, UpdateSourceTrigger=PropertyChanged}" FontSize="19" Margin="5,0,5,15"/>
         </StackPanel>
+
+        <TextBlock Grid.Row="2" Text="{Binding ErrorText}" Foreground="Red" FontSize="16" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         <Button Grid.Row="3" Content="Add Folder!" Command="{Binding AddFolder}"/>
 
