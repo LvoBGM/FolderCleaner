@@ -44,7 +44,7 @@ namespace WpfApp1.ViewModel
                 {
                     return;
                 }
-                string[] filePaths = Directory.GetFiles(selectedFolder.Path, "*");
+                string[] filePaths = Directory.GetFiles(selectedFolder.Path, "*"); // System.IO.DirectoryNotFoundException fix
 
                 Files.Clear();
 
