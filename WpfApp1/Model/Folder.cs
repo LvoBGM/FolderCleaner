@@ -8,7 +8,24 @@ namespace WpfApp1.Model
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public string Path { get; set; } = "";
+
+        private string path;
+        public string Path
+        { 
+            get
+            {
+                if (Directory.Exists(path)) { return  path; }
+                else
+                {
+                    Directory.CreateDirectory(path);
+                    return path;
+                }
+            }
+            set
+            {
+                path = value;
+            }
+        }
         public List<string> Types { get; set; }
 
         private static string JsonPath { get; set; } = "folders.json";

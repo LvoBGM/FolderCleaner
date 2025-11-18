@@ -66,8 +66,8 @@ namespace WpfApp1.ViewModel
         
         public MainWindowViewModel()
         {
-            FolderStore.LoadFolders();
             SourceDestinationFoldersClass.LoadFromJson();
+            FolderStore.LoadFolders();
             ManageWindowViewModel.SyncFoldersCollection();
         }
 
