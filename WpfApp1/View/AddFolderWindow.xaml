@@ -28,9 +28,5 @@
         <TextBlock Grid.Row="2" Text="{Binding ErrorText}" Foreground="Red" FontSize="16" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         <Button Grid.Row="3" Content="Add Folder!" Command="{Binding AddFolder}"/>
-
-
-
-
     </Grid>
 </Window>

@@ -9,7 +9,7 @@ public class EnumerableJoinConverter : IValueConverter
     {
         if (value is List<string> items)
         {
-            return string.Join(", ", items);
+            return string.Join(" ", items);
         }
         return string.Empty;
     }

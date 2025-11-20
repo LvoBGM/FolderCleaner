@@ -4,38 +4,57 @@ using System.IO;
 using System.Text.Json;
 using WpfApp1.Model;
 using WpfApp1.MVVM;
+using WpfApp1.View;
 
 namespace WpfApp1.ViewModel
 {
     internal class ManageWindowViewModel : ViewModelBase
     {
         public static ObservableCollection<Folder> Folders { get; set; } = [];
-        public ObservableCollection<FileClass> Files { get; init; } = [];
 
-        public RelayCommand DoubleClickFileClass => new RelayCommand(execute => OpenFile(execute), canExecute => { return true; });
-        public RelayCommand DeleteSelectedFolder => new RelayCommand(execute => DeleteFolder(), canExecute => { return true; });
+        public RelayCommand DeleteSelectedFolder => new RelayCommand(execute => DeleteFolder());
+        public RelayCommand EditSelectedFolder => new RelayCommand(execute => EditFolder());
 
-        private void OpenFile(object parameter)
-        {
-            if (parameter != null && parameter is FileClass file)
-            {
-                Process.Start(new ProcessStartInfo(file.Path)
-                {
-                    UseShellExecute = true
-                });
-            }
-        }
         public void DeleteFolder() // TODO: Doesn't work if user has selected multible folder AND ask if user wants to delete the actual directory as will
         {
             Folders.Remove(SelectedFolder);
 
             FolderStore.WriteFolders();
         }
+        private void EditFolder()
+        {
+            ErrorText = Folder.CheckFolderInput(editedFolder, true);
+            if (string.IsNullOrEmpty(ErrorText))
+            {
+                // This is here because the path property is really persistent and always wants to exist, so we need to delete it after we get it
+                Folder newFolder = EditedFolder.Copy();
+                string newFolderPath = newFolder.Path;
+                string oldFolderPath = SelectedFolder.Path;
 
-        private Folder selectedFolder;
+                // This sucks
+                Directory.Delete(newFolder.Path);
+
+                Directory.Move(oldFolderPath, newFolderPath);
+
+                SelectedFolder.Id = newFolder.Id;
+                SelectedFolder.Name = newFolder.Name;
+                SelectedFolder.Types = newFolder.Types;
+                SelectedFolder.Path = newFolder.Path;
+
+                Directory.Delete(oldFolderPath);
+
+                OnPropertyChanged();
+            }
+        }
+
+        private Folder? selectedFolder = new Folder(FolderStore.NextId(), "", new List<string>());
         public Folder SelectedFolder
         {
-            get { return selectedFolder; }
+            get
+            {
+                EditedFolder = selectedFolder.Copy();
+                return selectedFolder;
+            }
             set
             {
                 selectedFolder = value;
@@ -44,27 +63,27 @@ namespace WpfApp1.ViewModel
                 {
                     return;
                 }
-                string[] filePaths = Directory.GetFiles(selectedFolder.Path, "*"); // System.IO.DirectoryNotFoundException fix
-
-                Files.Clear();
-
-                foreach (string filePath in filePaths)
-                {
-                    Files.Add(new FileClass(Path.GetFileName(filePath), filePath));
-                }
-                
 
                 OnPropertyChanged();
-
             }
         }
 
-        private FileClass selectedFile;
-
-        public FileClass SelectedFile
+        private Folder? editedFolder;
+        public Folder EditedFolder
         {
-            get { return selectedFile; }
-            set { selectedFile = value; }
+            get { return editedFolder; }
+            set
+            {
+                editedFolder = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string errorText = string.Empty;
+        public string ErrorText
+        {
+            get { return errorText; }
+            set { errorText = value; OnPropertyChanged(); }
         }
 
         public static void SyncFoldersCollection()

@@ -23,7 +23,7 @@ namespace WpfApp1.ViewModel
                 Folders.Add(item);
             }
         }
-        static public void LoadFolders()
+        public static void LoadFolders()
         {
             if (System.IO.File.Exists(jsonPath))
             {
@@ -54,7 +54,7 @@ namespace WpfApp1.ViewModel
                 File.WriteAllText(jsonPath, "[]");
             }
         }
-        static public void WriteFolders()
+        public static void WriteFolders()
         {
             if (System.IO.File.Exists(jsonPath))
             {
@@ -68,6 +68,15 @@ namespace WpfApp1.ViewModel
 
                 File.WriteAllText(jsonPath, "[]");
             }
+        }
+        public static int NextId()
+        {
+            if (Folders.Count() == 0)
+            {
+                return 1;
+            }
+            int lastId = Folders.Last().Id;
+            return lastId + 1;
         }
     }
     internal class MainWindowViewModel

@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
+using WpfApp1.ViewModel;
 
 namespace WpfApp1.Model
 {
@@ -58,5 +59,92 @@ namespace WpfApp1.Model
 
             File.WriteAllText(JsonPath, json);
         }
+
+        public Folder Copy()
+        {
+            return new Folder(this.Id, this.Name, this.Types);
+        }
+
+        public static string CheckFolderInput(int id, string name, string types, bool checkForEdit = false)
+        {
+            if (id < 1 || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(types))
+            {
+                return "A field is empty";
+            }
+
+            // Check Extentions formating
+            var extentions = types.Split(" ");
+
+            foreach (var extention in extentions)
+            {
+                if (!extention.StartsWith('.'))
+                {
+                    return "Extentions have to start with a dot!";
+                }
+                if (extention.Length < 2)
+                {
+                    return "Extentions have to have letters after the dot!";
+                }
+
+                string extensionBody = extention.Substring(1);
+                if (!extensionBody.All(char.IsLetterOrDigit))
+                    return "Input needs to be only letters and digits!";
+            }
+
+            foreach (var folder in FolderStore.Folders)
+            {
+                if (folder.Id == id)
+                {
+                    return "A folder with that id already exists!";
+                }
+                if (folder.Name == name)
+                {
+                    return "A folder with that name already exists!";
+                }
+            }
+            return string.Empty;
+        }
+        public static string CheckFolderInput(Folder checkedFolder, bool checkForEdit = false)
+        {
+            if (checkedFolder.Id < 1 || string.IsNullOrEmpty(checkedFolder.Name) || checkedFolder.Types.Count() == 0)
+            {
+                return "A field is empty";
+            }
+
+            // Check Extentions formating
+            var extentions = checkedFolder.Types;
+
+            foreach (var extention in extentions)
+            {
+                if (!extention.StartsWith('.'))
+                {
+                    return "Extentions have to start with a dot!";
+                }
+                if (extention.Length < 2)
+                {
+                    return "Extentions have to have letters after the dot!";
+                }
+
+                string extensionBody = extention.Substring(1);
+                if (!extensionBody.All(char.IsLetterOrDigit))
+                    return "Input needs to be only letters and digits!";
+            }
+
+            if (!checkForEdit)
+            {
+                foreach (var folder in FolderStore.Folders)
+                {
+                    if (folder.Id == checkedFolder.Id)
+                    {
+                        return "A folder with that id already exists!";
+                    }
+                    if (folder.Name == checkedFolder.Name)
+                    {
+                        return "A folder with that name already exists!";
+                    }
+                }
+            }
+            return string.Empty;
+        } // TODO: THESE NEED TO CHECK IF THE INPUT IS DIFFERENT THAN ALL OTHER FOLDERS EXCEPT THE SELECt
     }
 }

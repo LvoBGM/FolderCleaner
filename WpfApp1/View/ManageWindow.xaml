@@ -29,15 +29,15 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Border Grid.Column="3" Grid.RowSpan="2" Background="Gray"/>
-            <View:FilesSearch Grid.Column="3"/>
+
+            <Border Grid.Column="3" Grid.RowSpan="2" Background="#BEBEBE" BorderThickness="1" BorderBrush="LightGray"/>
             
-            <View:FilesDataGrid Grid.Column="3" Grid.Row="1"/>
+            <View:FilesSearch Grid.Column="3"/>
+
+            <View:EditFolder Grid.Column="3" Grid.Row="2" Background="#BEBEBE" BorderThickness="1" BorderBrush="LightGray"/>
 
 
             <View:FoldersDataGrid Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
-
-
         </Grid>
     </Grid>
 </Window>
