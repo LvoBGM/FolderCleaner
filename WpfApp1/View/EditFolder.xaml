@@ -24,7 +24,7 @@
             <Label Content="Name"/>
             <TextBox Text="{Binding EditedFolder.Name, UpdateSourceTrigger=PropertyChanged}" FontSize="19" Margin="5,0,5,15" />
             <Label Content="Extentions"/>
-            <TextBox Text="{Binding EditedFolder.Types, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" FontSize="19" Margin="5,0,5,15"/>
+            <TextBox Text="{Binding SelectedFolderTypes, UpdateSourceTrigger=PropertyChanged}" FontSize="19" Margin="5,0,5,15"/>
         </StackPanel>
 
         <TextBlock Grid.Row="2" Text="{Binding ErrorText}" Foreground="Red" FontSize="16" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>

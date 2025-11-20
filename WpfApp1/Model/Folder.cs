@@ -1,6 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
+using System.Xml.Linq;
 using WpfApp1.ViewModel;
 
 namespace WpfApp1.Model
@@ -65,7 +67,7 @@ namespace WpfApp1.Model
             return new Folder(this.Id, this.Name, this.Types);
         }
 
-        public static string CheckFolderInput(int id, string name, string types, bool checkForEdit = false)
+        public static string CheckFolderInput(int id, string name, string types)
         {
             if (id < 1 || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(types))
             {
@@ -104,7 +106,7 @@ namespace WpfApp1.Model
             }
             return string.Empty;
         }
-        public static string CheckFolderInput(Folder checkedFolder, bool checkForEdit = false)
+        public static string CheckFolderInput(Folder checkedFolder)
         {
             if (checkedFolder.Id < 1 || string.IsNullOrEmpty(checkedFolder.Name) || checkedFolder.Types.Count() == 0)
             {
@@ -130,21 +132,19 @@ namespace WpfApp1.Model
                     return "Input needs to be only letters and digits!";
             }
 
-            if (!checkForEdit)
+            foreach (var folder in FolderStore.Folders)
             {
-                foreach (var folder in FolderStore.Folders)
+                if (folder.Id == checkedFolder.Id)
                 {
-                    if (folder.Id == checkedFolder.Id)
-                    {
-                        return "A folder with that id already exists!";
-                    }
-                    if (folder.Name == checkedFolder.Name)
-                    {
-                        return "A folder with that name already exists!";
-                    }
+                    return "A folder with that id already exists!";
+                }
+                if (folder.Name == checkedFolder.Name)
+                {
+                    return "A folder with that name already exists!";
                 }
             }
             return string.Empty;
-        } // TODO: THESE NEED TO CHECK IF THE INPUT IS DIFFERENT THAN ALL OTHER FOLDERS EXCEPT THE SELECt
+        }
+        
     }
 }
