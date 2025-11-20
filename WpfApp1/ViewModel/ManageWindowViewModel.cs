@@ -24,29 +24,32 @@ namespace WpfApp1.ViewModel
         }
         private void EditFolder()
         {
-            // We need to remove selected folder when checking here, since CheckFolderInput will flag it as a duplicate to our edited one
-
+            // We need copies, since these three are connected with each other and their getters and setters call each other
+            string types = SelectedFolderTypes;
             Folder editedFolderCopy = EditedFolder.Copy();
             Folder selectedFolderCopy = SelectedFolder.Copy();
 
+            // We need to remove selected folder when checking here, since CheckFolderInput will flag it as a duplicate to our edited one
             Folders.Remove(SelectedFolder);
-            ErrorText = Folder.CheckFolderInput(editedFolderCopy.Id, editedFolderCopy.Name, SelectedFolderTypes);
+            ErrorText = Folder.CheckFolderInput(editedFolderCopy.Id, editedFolderCopy.Name, types);
 
             // Replacing the selected folder
             SelectedFolder = selectedFolderCopy;
             Folders.Add(SelectedFolder);
-            
-            // Check if input hasn't been changed or it's just an id change
-            if (editedFolderCopy == selectedFolderCopy)
-            {
-                SelectedFolder.Id = editedFolderCopy.Id;
-                EditedFolder = new Folder(editedFolderCopy.Id, EditedFolder.Name, editedFolder.Types);
-                FolderStore.WriteFolders();
-                return;
-            }
 
             if (string.IsNullOrEmpty(ErrorText))
             {
+                List<string> typesList = types.Split(" ").ToList();
+                selectedFolderCopy.Types = typesList;
+
+                // Check if input hasn't been changed or it's just an id/types change
+                if (editedFolderCopy.Name == selectedFolderCopy.Name)
+                {
+                    SelectedFolder.Id = editedFolderCopy.Id;
+                    EditedFolder = new Folder(editedFolderCopy.Id, EditedFolder.Name, editedFolder.Types);
+                    FolderStore.WriteFolders();
+                    return;
+                }
                 // This is here because the path property is really persistent and always wants to exist, so we need to delete it after we get it
                 string newFolderPath = editedFolderCopy.Path;
                 string oldFolderPath = SelectedFolder.Path;
@@ -66,7 +69,7 @@ namespace WpfApp1.ViewModel
 
                 SelectedFolder.Id = editedFolderCopy.Id;
                 SelectedFolder.Name = editedFolderCopy.Name;
-                SelectedFolder.Types = editedFolderCopy.Types;
+                SelectedFolder.Types = typesList;
                 SelectedFolder.Path = editedFolderCopy.Path;
 
                 Directory.Delete(oldFolderPath);
@@ -109,7 +112,7 @@ namespace WpfApp1.ViewModel
         }
 
 
-        private Folder? editedFolder;
+        private Folder editedFolder = new Folder(0, "", new List<string>());
         public Folder EditedFolder
         {
             get { return editedFolder; }
@@ -126,7 +129,6 @@ namespace WpfApp1.ViewModel
             get { return errorText; }
             set { errorText = value; OnPropertyChanged(); }
         }
-
         public static void SyncFoldersCollection()
         {
             Folders = FolderStore.Folders;
