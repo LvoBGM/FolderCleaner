@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
+using System.Windows.Media.Media3D;
 using System.Xml.Linq;
 using WpfApp1.ViewModel;
 
@@ -146,5 +147,20 @@ namespace WpfApp1.Model
             return string.Empty;
         }
         
+
+        // User defined == and != operatiors. Id doesn't get checked!
+        public static bool operator==(Folder left, Folder right)
+        {
+            if (ReferenceEquals(left, right)) return true;
+            if (left is null || right is null) return false;
+            return (left.Name == right.Name) && (left.Types == right.Types);
+        }
+
+        public static bool operator !=(Folder left, Folder right)
+        {
+            if (ReferenceEquals(left, right)) return false;
+            if (left is null || right is null) return true;
+            return (left.Name != right.Name) && (left.Types != right.Types);
+        }
     }
 }

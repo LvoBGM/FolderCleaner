@@ -36,12 +36,19 @@ namespace WpfApp1.ViewModel
             SelectedFolder = selectedFolderCopy;
             Folders.Add(SelectedFolder);
             
+            // Check if input hasn't been changed or it's just an id change
+            if (editedFolderCopy == selectedFolderCopy)
+            {
+                SelectedFolder.Id = editedFolderCopy.Id;
+                EditedFolder = new Folder(editedFolderCopy.Id, EditedFolder.Name, editedFolder.Types);
+                FolderStore.WriteFolders();
+                return;
+            }
 
             if (string.IsNullOrEmpty(ErrorText))
             {
                 // This is here because the path property is really persistent and always wants to exist, so we need to delete it after we get it
-                Folder newFolder = editedFolderCopy.Copy();
-                string newFolderPath = newFolder.Path;
+                string newFolderPath = editedFolderCopy.Path;
                 string oldFolderPath = SelectedFolder.Path;
 
                 // This sucks
@@ -57,10 +64,10 @@ namespace WpfApp1.ViewModel
                 }
                 Directory.Move(oldFolderPath, newFolderPath);
 
-                SelectedFolder.Id = newFolder.Id;
-                SelectedFolder.Name = newFolder.Name;
-                SelectedFolder.Types = newFolder.Types;
-                SelectedFolder.Path = newFolder.Path;
+                SelectedFolder.Id = editedFolderCopy.Id;
+                SelectedFolder.Name = editedFolderCopy.Name;
+                SelectedFolder.Types = editedFolderCopy.Types;
+                SelectedFolder.Path = editedFolderCopy.Path;
 
                 Directory.Delete(oldFolderPath);
 
