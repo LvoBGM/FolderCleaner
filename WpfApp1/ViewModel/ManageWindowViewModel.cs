@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Shapes;
 using WpfApp1.Model;
 using WpfApp1.MVVM;
@@ -16,11 +18,33 @@ namespace WpfApp1.ViewModel
         public RelayCommand DeleteSelectedFolder => new RelayCommand(execute => DeleteFolder());
         public RelayCommand EditSelectedFolder => new RelayCommand(execute => EditFolder());
 
-        public void DeleteFolder() // TODO: Doesn't work if user has selected multible folder AND ask if user wants to delete the actual directory as will
+        public void DeleteFolder() 
         {
-            Folders.Remove(SelectedFolder);
+            string path = SelectedFolder.Path;
+            if (!Directory.EnumerateFileSystemEntries(path).Any())
+            {
+                Folders.Remove(SelectedFolder);
+                SelectedFolder = new Folder(0, "", new List<string>());
+                Directory.Delete(path);
+                FolderStore.WriteFolders();
+                return;
+            }
 
-            FolderStore.WriteFolders();
+            string messageBoxText = $"Folder has files in it and will not be deleted. Do you still wish to remove folder template?";
+            string caption = "Folder has files";
+            MessageBoxButton button = MessageBoxButton.YesNoCancel;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+            MessageBoxResult result;
+
+            result = System.Windows.MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                Folders.Remove(SelectedFolder);
+                SelectedFolder = new Folder(0, "", new List<string>());
+
+                FolderStore.WriteFolders();
+            }
         }
         private void EditFolder()
         {
