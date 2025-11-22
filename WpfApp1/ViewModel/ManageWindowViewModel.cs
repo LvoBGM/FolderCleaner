@@ -17,8 +17,9 @@ namespace WpfApp1.ViewModel
 
         public RelayCommand DeleteSelectedFolder => new RelayCommand(execute => DeleteFolder());
         public RelayCommand EditSelectedFolder => new RelayCommand(execute => EditFolder());
+        public RelayCommand OpenSelectedFolder => new RelayCommand(execute => OpenFolder());
 
-        public void DeleteFolder() 
+        private void DeleteFolder() 
         {
             string path = SelectedFolder.Path;
             if (!Directory.EnumerateFileSystemEntries(path).Any())
@@ -101,6 +102,16 @@ namespace WpfApp1.ViewModel
                 FolderStore.WriteFolders();
                 OnPropertyChanged();
             }
+        }
+        private void OpenFolder()
+        {
+            string path = SelectedFolder.Path;
+
+            Process.Start(new ProcessStartInfo()
+            {
+                FileName = $"{path}",
+                UseShellExecute = true,
+            });
         }
 
         private Folder? selectedFolder = new Folder(0, "", new List<string>());

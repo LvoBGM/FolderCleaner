@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
         <Border Background="DarkGray" BorderThickness="1">
             <TextBlock Background="Transparent"
-                Text="Files"
+                Text="Edit Folder"
                 FontSize="19"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"/>
@@ -25,7 +25,8 @@
                 FontSize="19"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                BorderThickness="0"/>
+                BorderThickness="0"
+                Command="{Binding OpenSelectedFolder}"/>
         </Border>
     </Grid>
 
