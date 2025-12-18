@@ -7,7 +7,12 @@ namespace WpfApp1.Model
     public class Folder
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+
+        public string Name
+        {
+            get { return System.IO.Path.GetFileName(Path); }
+            set { }
+        }
 
         private string path;
         public string Path

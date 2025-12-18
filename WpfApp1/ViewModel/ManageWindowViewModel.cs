@@ -93,7 +93,6 @@ namespace WpfApp1.ViewModel
                 Directory.Move(oldFolderPath, newFolderPath);
 
                 SelectedFolder.Id = editedFolderCopy.Id;
-                SelectedFolder.Name = editedFolderCopy.Name;
                 SelectedFolder.Types = typesList;
                 SelectedFolder.Path = editedFolderCopy.Path;
 
