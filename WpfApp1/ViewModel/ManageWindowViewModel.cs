@@ -56,7 +56,7 @@ namespace WpfApp1.ViewModel
 
             // We need to remove selected folder when checking here, since CheckFolderInput will flag it as a duplicate to our edited one
             Folders.Remove(SelectedFolder);
-            ErrorText = Folder.CheckFolderInput(editedFolderCopy.Id, editedFolderCopy.Name, types);
+            ErrorText = FoldersConfig.CheckFolderInputValididty(editedFolderCopy.Id, editedFolderCopy.Name, types);
 
             // Replacing the selected folder
             SelectedFolder = selectedFolderCopy;

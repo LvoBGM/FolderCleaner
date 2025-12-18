@@ -9,7 +9,7 @@ namespace WpfApp1.Model
     {
         static public ObservableCollection<Folder> Folders { get; set; } = [];
 
-        static private string jsonPath = "folders.json";
+        static public string jsonPath = "folders.json";
 
         static public void SortFolders()
         {
@@ -75,6 +75,85 @@ namespace WpfApp1.Model
             }
             int lastId = Folders.Last().Id;
             return lastId + 1;
+        }
+
+        public static string CheckFolderInputValididty(int id, string name, string types)
+        {
+            if (id < 1 || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(types))
+            {
+                return "A field is empty";
+            }
+
+            // Check Extentions formating
+            var extentions = types.Split(" ");
+
+            foreach (var extention in extentions)
+            {
+                if (!extention.StartsWith('.'))
+                {
+                    return "Extentions have to start with a dot!";
+                }
+                if (extention.Length < 2)
+                {
+                    return "Extentions have to have letters after the dot!";
+                }
+
+                string extensionBody = extention.Substring(1);
+                if (!extensionBody.All(char.IsLetterOrDigit))
+                    return "Input needs to be only letters and digits!";
+            }
+
+            foreach (var folder in Folders)
+            {
+                if (folder.Id == id)
+                {
+                    return "A folder with that id already exists!";
+                }
+                if (folder.Name == name)
+                {
+                    return "A folder with that name already exists!";
+                }
+            }
+            return string.Empty;
+        }
+        public static string CheckFolderInputValididty(Folder checkedFolder)
+        {
+            if (checkedFolder.Id < 1 || string.IsNullOrEmpty(checkedFolder.Name) || checkedFolder.Types.Count() == 0)
+            {
+                return "A field is empty";
+            }
+
+            // Check Extentions formating
+            var extentions = checkedFolder.Types;
+
+            foreach (var extention in extentions)
+            {
+                if (!extention.StartsWith('.'))
+                {
+                    return "Extentions have to start with a dot!";
+                }
+                if (extention.Length < 2)
+                {
+                    return "Extentions have to have letters after the dot!";
+                }
+
+                string extensionBody = extention.Substring(1);
+                if (!extensionBody.All(char.IsLetterOrDigit))
+                    return "Input needs to be only letters and digits!";
+            }
+
+            foreach (var folder in Folders)
+            {
+                if (folder.Id == checkedFolder.Id)
+                {
+                    return "A folder with that id already exists!";
+                }
+                if (folder.Name == checkedFolder.Name)
+                {
+                    return "A folder with that name already exists!";
+                }
+            }
+            return string.Empty;
         }
     }
 }

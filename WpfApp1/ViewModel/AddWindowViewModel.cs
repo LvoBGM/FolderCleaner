@@ -38,7 +38,7 @@ namespace WpfApp1.ViewModel
         }
         private void CreateFolder()
         {
-            ErrorText = Folder.CheckFolderInput(Id, Name, Extentions);
+            ErrorText = FoldersConfig.CheckFolderInputValididty(Id, Name, Extentions);
             if (string.IsNullOrEmpty(ErrorText))
             {
                 if (SourceDestinationFoldersClass.DestinationFolderPath == string.Empty)
