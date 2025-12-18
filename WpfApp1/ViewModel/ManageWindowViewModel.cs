@@ -27,7 +27,7 @@ namespace WpfApp1.ViewModel
                 Folders.Remove(SelectedFolder);
                 SelectedFolder = new Folder(0, "", new List<string>());
                 Directory.Delete(path);
-                FolderStore.WriteFolders();
+                FoldersConfig.WriteFolders();
                 return;
             }
 
@@ -44,7 +44,7 @@ namespace WpfApp1.ViewModel
                 Folders.Remove(SelectedFolder);
                 SelectedFolder = new Folder(0, "", new List<string>());
 
-                FolderStore.WriteFolders();
+                FoldersConfig.WriteFolders();
             }
         }
         private void EditFolder()
@@ -72,7 +72,7 @@ namespace WpfApp1.ViewModel
                 {
                     SelectedFolder.Id = editedFolderCopy.Id;
                     EditedFolder = new Folder(editedFolderCopy.Id, EditedFolder.Name, editedFolder.Types);
-                    FolderStore.WriteFolders();
+                    FoldersConfig.WriteFolders();
                     return;
                 }
                 // This is here because the path property is really persistent and always wants to exist, so we need to delete it after we get it
@@ -99,7 +99,7 @@ namespace WpfApp1.ViewModel
 
                 Directory.Delete(oldFolderPath);
 
-                FolderStore.WriteFolders();
+                FoldersConfig.WriteFolders();
                 OnPropertyChanged();
             }
         }
@@ -166,7 +166,7 @@ namespace WpfApp1.ViewModel
         }
         public static void SyncFoldersCollection()
         {
-            Folders = FolderStore.Folders;
+            Folders = FoldersConfig.Folders;
         }
 
     }

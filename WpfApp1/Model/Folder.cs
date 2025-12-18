@@ -94,7 +94,7 @@ namespace WpfApp1.Model
                     return "Input needs to be only letters and digits!";
             }
 
-            foreach (var folder in FolderStore.Folders)
+            foreach (var folder in FoldersConfig.Folders)
             {
                 if (folder.Id == id)
                 {
@@ -133,7 +133,7 @@ namespace WpfApp1.Model
                     return "Input needs to be only letters and digits!";
             }
 
-            foreach (var folder in FolderStore.Folders)
+            foreach (var folder in FoldersConfig.Folders)
             {
                 if (folder.Id == checkedFolder.Id)
                 {
