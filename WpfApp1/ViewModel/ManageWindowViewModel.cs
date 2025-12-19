@@ -79,24 +79,23 @@ namespace WpfApp1.ViewModel
                 string newFolderPath = editedFolderCopy.Path;
                 string oldFolderPath = SelectedFolder.Path;
 
-                // This sucks
-                var test = Directory.GetFiles(newFolderPath);
-                if (!Directory.EnumerateFileSystemEntries(newFolderPath).Any())
+                if (Directory.Exists(newFolderPath))
                 {
-                    Directory.Delete(newFolderPath);
-                }
-                else
-                {
-                    ErrorText = "Folder with that name already exist in source folder!";
-                    return;
+                    if (Directory.EnumerateFileSystemEntries(newFolderPath).Any())
+                    {
+                        ErrorText = "Folder with that name already exist in source folder!";
+                        return;
+                    }
+                    else
+                    {
+                        Directory.Delete(newFolderPath);
+                    } 
                 }
                 Directory.Move(oldFolderPath, newFolderPath);
 
                 SelectedFolder.Id = editedFolderCopy.Id;
                 SelectedFolder.Types = typesList;
                 SelectedFolder.Path = editedFolderCopy.Path;
-
-                Directory.Delete(oldFolderPath);
 
                 FoldersConfig.WriteFolders();
                 OnPropertyChanged();

@@ -36,12 +36,7 @@ namespace WpfApp1.Model
 
             Path = $"{SourceDestinationFoldersClass.DestinationFolderPath}\\{name}";
 
-            if (!Directory.Exists(Path))
-            {
-                Directory.CreateDirectory(Path);
-            }
-
-                Types = types ?? new List<string>();
+            Types = types ?? new List<string>();
         }
 
         public void LoadToJson()
