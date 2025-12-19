@@ -1,9 +1,12 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Shapes;
 using WpfApp1.Model;
+using Path = System.IO.Path;
 
 namespace WpfApp1.ViewModel
 {
@@ -27,6 +30,8 @@ namespace WpfApp1.ViewModel
                 {
                     if (folder.Types.Contains(Path.GetExtension(file)))
                     {
+                        if (!Directory.Exists(folder.Path)) { Directory.CreateDirectory(folder.Path); ; };
+
                         string newFileLocation = $"{folder.Path}\\{Path.GetFileName(file)}";
                         try
                         {

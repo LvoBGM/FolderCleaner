@@ -19,12 +19,7 @@ namespace WpfApp1.Model
         { 
             get
             {
-                if (Directory.Exists(path)) { return  path; }
-                else
-                {
-                    Directory.CreateDirectory(path);
-                    return path;
-                }
+                return path;
             }
             set
             {
