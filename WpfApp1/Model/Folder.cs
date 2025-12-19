@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
+using System.Xml.Linq;
 
 namespace WpfApp1.Model
 {
@@ -11,7 +12,7 @@ namespace WpfApp1.Model
         public string Name
         {
             get { return System.IO.Path.GetFileName(Path); }
-            set { }
+            set { Path = $"{SourceDestinationFoldersClass.DestinationFolderPath}\\{value}"; }
         }
 
         private string path;
