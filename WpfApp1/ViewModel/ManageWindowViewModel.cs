@@ -93,9 +93,12 @@ namespace WpfApp1.ViewModel
                 }
                 Directory.Move(oldFolderPath, newFolderPath);
 
+                // Reset Selected Folder and Edited Folder
                 SelectedFolder.Id = editedFolderCopy.Id;
                 SelectedFolder.Types = typesList;
                 SelectedFolder.Path = editedFolderCopy.Path;
+
+                EditedFolder = SelectedFolder.Copy();
 
                 FoldersConfig.WriteFolders();
                 OnPropertyChanged();
