@@ -56,6 +56,7 @@ namespace WpfApp1.Model
         {
             if (System.IO.File.Exists(jsonPath))
             {
+                SortFolders();
                 string json = JsonSerializer.Serialize(Folders);
 
                 File.WriteAllText(jsonPath, json);
